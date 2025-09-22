@@ -19,7 +19,6 @@ import sys
 import pysqlite3
 sys.modules["sqlite3"] = pysqlite3
 
-
 load_dotenv()
 
 # os.environ['HF_TOKEN'] = os.getenv('HF_TOKEN')
