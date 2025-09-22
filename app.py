@@ -15,6 +15,10 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 from dotenv import load_dotenv
 import os
+import sys
+import pysqlite3
+sys.modules["sqlite3"] = pysqlite3
+
 
 load_dotenv()
 

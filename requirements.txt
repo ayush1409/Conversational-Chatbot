@@ -24,3 +24,4 @@ langchain_huggingface
 boto3
 awscli
 langchain-chroma
+pysqlite3-binary
