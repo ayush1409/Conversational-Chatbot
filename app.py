@@ -4,7 +4,8 @@ import streamlit as st
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain_chroma import Chroma
+# from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -15,9 +16,9 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 from dotenv import load_dotenv
 import os
-import sys
-import pysqlite3
-sys.modules["sqlite3"] = pysqlite3
+# import sys
+# import pysqlite3
+# sys.modules["sqlite3"] = pysqlite3
 
 load_dotenv()
 
@@ -57,7 +58,8 @@ if api_key:
         # Split and create embeggings for the documents
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=500)
         splits = text_splitter.split_documents(documents)
-        vectorstore = Chroma.from_documents(splits, embeddings, persist_directory="./chroma_db")
+        vectorstore = FAISS.from_documents(splits, embeddings)
+        vectorstore.save_local("faiss_index")
         retriever = vectorstore.as_retriever()
 
         contextualize_q_system_prompt=(
