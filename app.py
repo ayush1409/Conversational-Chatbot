@@ -18,7 +18,9 @@ import os
 
 load_dotenv()
 
-os.environ['HF_TOKEN'] = os.getenv('HF_TOKEN')
+# os.environ['HF_TOKEN'] = os.getenv('HF_TOKEN')
+os.environ['HF_TOKEN'] = st.secrets['HF_TOKEN']
+
 embeddings = HuggingFaceEmbeddings(model_name='all-MiniLM-L6-v2')
 
 # setup streamlit app
@@ -120,7 +122,7 @@ if api_key:
                     "configurable": {"session_id": session_id}
                 }
             )
-            st.write(st.session_state.store)
+            # st.write(st.session_state.store)
             st.write("Assistant: ", response['answer'])
             st.write("Chat History: ", session_history.messages)
 else:
